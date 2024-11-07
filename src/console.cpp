@@ -5,21 +5,21 @@
 #include "../h/MemoryAllocator.hpp"
 #include "../h/print.hpp"
 
-char* IO::InputBuffer = new char[128];
-char* IO::OutputBuffer = new char[128];
+char* IO::InputBuffer = new char[512];
+char* IO::OutputBuffer = new char[512];
 
 uint64 IO::InputHead = 0;
 uint64 IO::OutputHead = 0;
 uint64 IO::InputTail = 0;
 uint64 IO::OutputTail = 0;
 
-uint64 IO::size = 1000;
+uint64 IO::size = 512;
 
 _sem* IO::fullInput = _sem::_sem_open(0);
-_sem* IO::emptyInput = _sem::_sem_open(128);
+_sem* IO::emptyInput = _sem::_sem_open(512);
 
 _sem* IO::fullOutput = _sem::_sem_open(0);
-_sem* IO::emptyOutput = _sem::_sem_open(128);
+_sem* IO::emptyOutput = _sem::_sem_open(512);
 
 _sem* IO::mutexTailInput = _sem::_sem_open(1);
 _sem* IO::mutexHeadInput = _sem::_sem_open(1);
@@ -82,21 +82,21 @@ bool IO::is_empty() {
 }
 
 void IO::initialize(){
-    InputBuffer = new char[1000];
-    OutputBuffer = new char[1000];
+    InputBuffer = new char[512];
+    OutputBuffer = new char[512];
 
     InputHead = 0;
     OutputHead = 0;
     InputTail = 0;
     OutputTail = 0;
 
-    size = 128;
+    size = 512;
 
     fullInput = _sem::_sem_open(0);
-    emptyInput = _sem::_sem_open(1000);
+    emptyInput = _sem::_sem_open(512);
 
     fullOutput = _sem::_sem_open(0);
-    emptyOutput = _sem::_sem_open(1000);
+    emptyOutput = _sem::_sem_open(512);
 
     mutexTailInput = _sem::_sem_open(1);
     mutexHeadInput = _sem::_sem_open(1);
