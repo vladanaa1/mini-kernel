@@ -32,7 +32,7 @@ void RiscV::handleSupervisorTrap()
     __asm__ volatile("mv %0, a2" : "=r" (a2));
     __asm__ volatile("mv %0, a3" : "=r" (a3));
 
-    uint64 scause = r_scause(); // procitamo scause reg. kako bismo znali razlog prekida/izuzetka
+    uint64 scause = r_scause();
     if (scause == 0x0000000000000009UL || scause == 0x0000000000000008UL)
     {
         // interrupt: no; cause code: environment from S-mode(9) or U-mode(8)
@@ -120,8 +120,7 @@ void RiscV::handleSupervisorTrap()
         // interrupt: yes; cause code: supervisor software interrupt (CLINT; machine timer interrupt)
         while ((*((char *) CONSOLE_STATUS) & CONSOLE_TX_STATUS_BIT) && !IO::is_empty()) {
             //printString1("machine timer interrupt && getting smth from output buffer\n");
-            char c = IO::getFromOutputBuffer(); // nit jezgra je potrosac, korisnicka nit je proizvodjac
-            // i ona "puni" InputBuffer sa putc
+            char c = IO::getFromOutputBuffer();
             *(volatile char *) CONSOLE_TX_DATA = c;
         }
 
@@ -161,7 +160,7 @@ void RiscV::handleSupervisorTrap()
             if ((*((char *) CONSOLE_STATUS) & CONSOLE_RX_STATUS_BIT))
             {
                 volatile char c = *(char *) CONSOLE_RX_DATA;
-                IO::putIntoInputBuffer(c); // prekidna rutina proizvodjac, kor. nit potrosac, u obradi sis. poziva
+                IO::putIntoInputBuffer(c);
                 // getc uzimamo iz InputBuffer-a
             }
         }
