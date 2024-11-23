@@ -10,7 +10,6 @@ typedef MemoryAllocator::FreeCell FreeCell;
 FreeCell * MemoryAllocator::head = nullptr;
 
 void *MemoryAllocator::allocate(uint64 size) {
-    //printString1("allocate function called!\n");
     if(size <= 0) return nullptr; // ERROR
 
     /*
@@ -58,7 +57,6 @@ void *MemoryAllocator::allocate(uint64 size) {
 }
 
 int MemoryAllocator::deallocate(void *pointer) {
-    //printString1("dealloacte function called!\n");
     if (pointer < HEAP_START_ADDR || pointer >= HEAP_END_ADDR) return -1; // ERROR
 
     uint64 size = *((uint64*) pointer - 1);
@@ -100,7 +98,6 @@ int MemoryAllocator::deallocate(void *pointer) {
 }
 
 uint64 *MemoryAllocator::compress(FreeCell *first, FreeCell *second) {
-    // pre poziva ove fje smo izvrsili proveru da li mozemo spojiti dva segmenta, vracamo pok. na prvi od 2
     first->next = second->next;
     first->size += second->size;
     if(second == head) head = first;
