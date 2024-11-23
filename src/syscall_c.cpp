@@ -50,8 +50,6 @@ int mem_free (void* p){
 }
 
 int thread_create(thread_t *handle, void (*start_routine)(void *), void *arg) { // a0, a1, a2
-    //thread_create_params params = {handle, start_routine, arg};
-    //thread_create_params* pointer = &params;
     //printString1("thread_create sys call called!\n");
     __asm__ volatile ("mv a3, %[temp]" : : [temp] "r" (arg)); // mv	a3,a2
     __asm__ volatile ("mv a2, %[temp]" : : [temp] "r" (start_routine)); // mv	a2,a1
@@ -83,8 +81,6 @@ void thread_dispatch() {
 }
 
 int sem_open(sem_t *handle, unsigned int init) {
-    //sem_open_params params = {handle, init};
-    //sem_open_params* pointer = &params;
     __asm__ volatile("mv a2, %0" : : "r"(init));
     __asm__ volatile("mv a1, %0" : : "r"(handle));
     __asm__ volatile ("li a0, 0x21");
@@ -99,8 +95,6 @@ int sem_open(sem_t *handle, unsigned int init) {
 }
 
 int sem_close(sem_t id) {
-    //sem_params params = {id};
-    //sem_params* pointer = &params;
 
     __asm__ volatile("mv a1, %0" : : "r"(id));
     __asm__ volatile ("li a0, 0x22");
@@ -115,8 +109,6 @@ int sem_close(sem_t id) {
 }
 
 int sem_wait(sem_t id) {
-    //sem_params params = {id};
-    //sem_params* pointer = &params;
 
     __asm__ volatile("mv a1, %0" : : "r"(id));
     __asm__ volatile ("li a0, 0x23");
@@ -131,8 +123,6 @@ int sem_wait(sem_t id) {
 }
 
 int sem_signal(sem_t id) {
-    //sem_params params = {id};
-    //sem_params* pointer = &params;
 
     __asm__ volatile("mv a1, %0" : : "r"(id));
     __asm__ volatile ("li a0, 0x24");
@@ -147,8 +137,6 @@ int sem_signal(sem_t id) {
 }
 
 int sem_timedwait(sem_t id, time_t timeout) {
-    //sem_timedwait_params params = {id, timeout};
-    //sem_timedwait_params* pointer = &params;
 
     __asm__ volatile("mv a2, %0" : : "r"(timeout));
     __asm__ volatile("mv a1, %0" : : "r"(id));
@@ -164,8 +152,6 @@ int sem_timedwait(sem_t id, time_t timeout) {
 }
 
 int sem_trywait(sem_t id) {
-    //sem_params params = {id};
-    //sem_params* pointer = &params;
 
     __asm__ volatile("mv a1, %0" : : "r"(id));
     __asm__ volatile ("li a0, 0x26");
@@ -180,8 +166,6 @@ int sem_trywait(sem_t id) {
 }
 
 int time_sleep(time_t time) {
-    //time_sleep_params params = {time};
-    //time_sleep_params* pointer = &params;
 
     __asm__ volatile("mv a1, %0" : : "r"(time));
     __asm__ volatile ("li a0, 0x31");
