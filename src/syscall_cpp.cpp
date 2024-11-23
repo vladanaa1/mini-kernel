@@ -10,7 +10,7 @@
 
 
 Thread::Thread(void (*body)(void *), void *arg) : body(body), arg(arg) {
-    myHandle = nullptr; // redundantno ?
+    myHandle = nullptr;
     //printString1("Constructor called\n");
 }
 
@@ -38,7 +38,7 @@ Thread::Thread() {
     arg = nullptr;
 }
 
-void Thread::threadWrapper(void *thr) { // ovo se pozove, castovanje nije u redu
+void Thread::threadWrapper(void *thr) {
     printString1("ThreadWrapper called!\n");
     Thread* thread = (Thread*) thr;
     if(!thread->body){
