@@ -55,12 +55,10 @@ void TCB::thread_exit() {
 }
 
 uint64 TCB::time_sleep(uint64 time) {
-    //printString1("TCB::time_sleep function called\n");
     uint64 wake_up_time = TCB::getTime() + time;
     TCB::running->setBlocked(true);
     if(!blockedOnTimeSleep) blockedOnTimeSleep = new BlockedQueue();
     blockedOnTimeSleep->push(TCB::running, wake_up_time);
-    //if(!blockedOnTimeSleep->empty()) printString1("blockedOnTimeSleep queue not empty!\n");
     /*
     printString("current time is ");
     printInteger(TCB::getTime());
