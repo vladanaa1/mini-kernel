@@ -27,7 +27,6 @@ int Thread::sleep(time_t time) {
 }
 
 Thread::~Thread() {
-    //thread_exit(); // -> ovo sig ne moze
     myHandle->setFinished(true);
     delete myHandle;
 }
