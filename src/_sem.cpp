@@ -7,15 +7,14 @@
 #include "../h/print.hpp"
 
 _sem* _sem::_sem_open(unsigned int init) {
-    //printString1("sem open called!\n");
     _sem* sem = (_sem*) (new _sem(init));
     return sem;
 }
 
 uint64 _sem::_sem_close(_sem* id) {
-    id->open = 0; // stavis flag da bi svi wait-ovi blokiranih niti bacili gresku
+    id->open = 0;
     TCB* thread = id->blocked.removeFirst();
-    while(thread){ // sve niti iz blocked(blokirane na wait-u ovog semafora) stavis u scheduler
+    while(thread){
         thread->setBlocked(false);
         Scheduler::put(thread);
         thread = id->blocked.removeFirst();
@@ -77,7 +76,7 @@ uint64 _sem::_sem_trywait(_sem* id) {
     }
 }
 
-// ne koristim ih za sad, nestaticke su
+/*
 void _sem::block() {
     blocked.addLast(TCB::running);
     TCB::running->setBlocked(true);
@@ -89,3 +88,4 @@ void _sem::deblock() {
     thread->setBlocked(false);
     Scheduler::put(thread);
 }
+*/
